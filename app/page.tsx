@@ -1,9 +1,11 @@
 import { prisma } from '../lib/prisma'
 import { revalidatePath } from 'next/cache'
-
-export const dynamic = 'force-dynamic'
+import { headers } from 'next/headers'
 
 export default async function Home() {
+  // Force dynamic rendering by reading request headers
+  await headers()
+
   // Fetch existing data from Supabase
   const users = await prisma.user.findMany()
   const chores = await prisma.chore.findMany()
